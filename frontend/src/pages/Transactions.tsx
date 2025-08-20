@@ -196,26 +196,26 @@ export default function Transactions() {
 
               <CardContent className='-mt-4 flex flex-col gap-y-4'>
                 <div className='flex flex-col'>
-                  <text className='text-gray-600 font-normal text-lg'>
+                  <h3 className='text-gray-600 font-normal text-lg'>
                     Balance
-                  </text>
+                  </h3>
                   <h1 className='text-2xl font-extrabold'>
                     PHP 1,200.00
                   </h1>
                 </div>
                 <div className='flex flex-row justify-between w-full'>
                   <div className='flex flex-col'>
-                    <text className='text-gray-600 font-normal text-md'>
+                    <h4 className='text-gray-600 font-normal text-md'>
                       Total Income
-                    </text>
+                    </h4>
                     <h1 className='text-xl font-bold text-green-600'>
                       PHP 1,200.00
                     </h1>
                   </div>
                   <div className='flex flex-col'>
-                    <text className='text-gray-600 font-normal text-md'>
+                    <h4 className='text-gray-600 font-normal text-md'>
                       Total Expenses
-                    </text>
+                    </h4>
                     <h1 className='text-xl font-bold text-red-600'>
                       PHP 1,200.00
                     </h1>
