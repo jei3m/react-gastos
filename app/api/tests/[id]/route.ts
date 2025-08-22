@@ -20,7 +20,7 @@ export async function PUT(
         const {
             name, 
             description
-        } = (await req.json()).payload,
+        } = await req.json(),
             id = params.id;
         
         await db.query(updateTest(), {
@@ -34,9 +34,7 @@ export async function PUT(
             result = JSON.parse(rows[0].response);
         
         return success({ 
-            response: JSON.parse(
-                result[0].response
-            ) 
+            response: result
         });
     } catch (error) {
         return fail(error instanceof Error ? error.message : 'Failed to Update Test');
@@ -59,9 +57,7 @@ export async function DELETE(
             result = JSON.parse(rows[0].response);
         
         return success({ 
-            response: JSON.parse(
-                result[0].response
-            ) 
+            response: result
         });
     } catch (error) {
         return fail(error instanceof Error ? error.message : 'Failed to Update Test');
