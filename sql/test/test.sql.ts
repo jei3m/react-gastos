@@ -15,6 +15,7 @@ export const createTest = () => {
 
 export const getTests = () => {
     return `SELECT
+                id,
                 name,
                 description,
                 created_at AS createdAt
