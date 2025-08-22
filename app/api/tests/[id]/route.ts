@@ -6,7 +6,7 @@ import {
     updateTest,
     deleteTest
 } from '@/sql/test/test.sql';
-import { ok, fail } from '@/utils/helpers';
+import { success, fail } from '@/utils/helpers';
 
 interface responseRow extends RowDataPacket {
   response: string;
@@ -33,7 +33,7 @@ export async function PUT(
         const [rows] = await db.query<responseRow[]>(returnResponse()),
             result = JSON.parse(rows[0].response);
         
-        return ok({ 
+        return success({ 
             response: JSON.parse(
                 result[0].response
             ) 
@@ -58,7 +58,7 @@ export async function DELETE(
         const [rows] = await db.query<responseRow[]>(returnResponse()),
             result = JSON.parse(rows[0].response);
         
-        return ok({ 
+        return success({ 
             response: JSON.parse(
                 result[0].response
             ) 

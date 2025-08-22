@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export function ok(
+export function success(
     data: Record<string, any>, 
     status = 200
 ) {

@@ -7,7 +7,7 @@ import {
     createTest,
     getTests
 } from '@/sql/test/test.sql';
-import { ok, fail } from '@/utils/helpers';
+import { success, fail } from '@/utils/helpers';
 
 interface TestResponseRow extends RowDataPacket {
   response: string;
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     const [rows] = await db.query<TestResponseRow[]>(returnResponse()),
         result = JSON.parse(rows[0].response);
 
-    return ok({ 
+    return success({ 
       response: result
     });
   } catch (error) {
@@ -43,7 +43,7 @@ export async function GET() {
       getTests()
     );
 
-    return ok({ data: rows });
+    return success({ data: rows });
   } catch (err) {
     return fail(err instanceof Error ? err.message : 'Failed to get tests');
   }
