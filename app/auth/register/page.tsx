@@ -32,15 +32,15 @@ export default function Register() {
     const name = form.get("name") as string;
 
     const { error } = await authClient.signUp.email({
-    name: name,
-    email: email,
-    password: password,
-    callbackURL: '/pages/transactions',
+      name: name,
+      email: email,
+      password: password,
+      callbackURL: '/pages/transactions',
     });
 
     if (error) {
-    setErrors([error.message || "Unknown Error"]);
-    setLoading(false);
+      setErrors([error.message || "Unknown Error"]);
+      setLoading(false);
     };
 
     setLoading(false);

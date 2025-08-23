@@ -14,11 +14,11 @@ export default function Login() {
   const router = useRouter();
 
   useEffect(() => {
-      fetchSession().then(({session}) => {
-          if (session) {
-              router.push('/pages/transactions')
-          } 
-      });
+    fetchSession().then(({session}) => {
+      if (session) {
+          router.push('/pages/transactions')
+      } 
+    });
   },[]);
 
   async function handleSubmit(e:React.FormEvent<HTMLFormElement>) {
