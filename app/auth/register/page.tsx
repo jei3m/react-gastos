@@ -15,9 +15,9 @@ export default function Register() {
 
   useEffect(() => {
     fetchSession().then(({session}) => {
-        if (session) {
-            router.push('/pages/transactions')
-        } 
+      if (session) {
+        router.push('/pages/transactions')
+      } 
     });
   },[]);
 
@@ -54,65 +54,65 @@ export default function Register() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <Label htmlFor="name" className="text-md font-medium">
-                  Name
-                </Label>
-                <Input
-                  id="name"
-                  name="name"
-                  type="text"
-                  autoComplete="name"
-                  required
-                  className="mt-1 h-12 rounded-lg border-2 border-black bg-white"
-                />
-              </div>
+            <div>
+              <Label htmlFor="name" className="text-md font-medium">
+                Name
+              </Label>
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                autoComplete="name"
+                required
+                className="mt-1 h-12 rounded-lg border-2 border-black bg-white"
+              />
+            </div>
 
-              <div>
-                  <Label htmlFor="name" className="text-md font-medium">
-                      Email
-                  </Label>
-                      <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      required
-                      className="mt-1 h-12 rounded-lg border-2 border-black bg-white"
-                  />
-              </div>
+            <div>
+              <Label htmlFor="name" className="text-md font-medium">
+                Email
+              </Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="mt-1 h-12 rounded-lg border-2 border-black bg-white"
+              />
+            </div>
 
-              <div>
-                  <Label htmlFor="name" className="text-md font-medium">
-                      Password
-                  </Label>
-                  <Input
-                      id="password"
-                      name="password"
-                      type="password"
-                      autoComplete="new-password"
-                      required
-                      className="mt-1 h-12 rounded-lg border-2 border-black bg-white"
-                  />
-              </div>
+            <div>
+              <Label htmlFor="name" className="text-md font-medium">
+                Password
+              </Label>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="new-password"
+                required
+                className="mt-1 h-12 rounded-lg border-2 border-black bg-white"
+              />
+            </div>
 
-              {errors.length > 0 && (
-                  <p className="text-md text-red-600">{errors[0]}</p>
-              )}
+            {errors.length > 0 && (
+              <p className="text-md text-red-600">{errors[0]}</p>
+            )}
 
-              <Button
-                  type="submit"
-                  disabled={loading}
-                  className="mt-1 h-12 w-full rounded-lg border-2 font-semibold"
-              >
-                  {loading ? "Signing up…" : "Sign up"}
-              </Button>
+            <Button
+              type="submit"
+              disabled={loading}
+              className="mt-1 h-12 w-full rounded-lg border-2 font-semibold"
+            >
+              {loading ? "Signing up…" : "Sign up"}
+            </Button>
           </form>
 
           <p className="text-center text-sm text-slate-600">
             Already have an account?{" "}
             <Link href="/auth/login" className="font-medium text-blue-600">
-                Log in
+              Log in
             </Link>
           </p>
         </div>
