@@ -7,8 +7,8 @@ export async function middleware(request: NextRequest) {
         headers: await headers()
     })
  
-    if(!session) {
-        return NextResponse.redirect(new URL("/auth/register", request.url));
+    if (!session) {
+        return NextResponse.redirect(new URL("/auth/login", request.url));
     }
  
     return NextResponse.next();
@@ -16,5 +16,5 @@ export async function middleware(request: NextRequest) {
  
 export const config = {
   runtime: "nodejs",
-  matcher: ["/transactions"],
+  matcher: ["/pages/transactions"],
 };
