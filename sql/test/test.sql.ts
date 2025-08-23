@@ -1,7 +1,3 @@
-export const returnResponse = () => {
-    return `SELECT @response AS response;`;
-};
-
 export const createTest = () => {
     return `CALL manage_test 
             (
@@ -10,7 +6,8 @@ export const createTest = () => {
                 :name,
                 :description,
                 @response
-            );`;
+            );
+            SELECT @response AS response;`;
 };
 
 export const getTests = () => {
@@ -31,7 +28,8 @@ export const updateTest = () => {
                 :name,
                 :description,
                 @response
-            );`;
+            );
+            SELECT @response AS response;`;
 };
 
 export const deleteTest = () => {
@@ -42,5 +40,6 @@ export const deleteTest = () => {
                 NULL,
                 NULL,
                 @response
-            );`;
+            );
+            SELECT @response AS response;`;
 };

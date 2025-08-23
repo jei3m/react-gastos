@@ -1,23 +1,18 @@
 import { NextRequest } from 'next/server';
-import { RowDataPacket } from 'mysql2/promise';
 import crypto from 'crypto'
 import { db } from '@/utils/db';
 import {
-    returnResponse,
     createTest,
     getTests
 } from '@/sql/test/test.sql';
 import { success, fail } from '@/utils/helpers';
-
-interface TestResponseRow extends RowDataPacket {
-  response: string;
-}
+import { responseRow } from '@/types/response';
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, description } = await req.json();
+    const {name, description} = await req.json();
 
-    await db.query(
+    const [resultCreate] = await db.query<responseRow[]>(
       createTest(), 
       { 
         actionType: 'create',
@@ -26,14 +21,13 @@ export async function POST(req: NextRequest) {
       }
     );
 
-    const [rows] = await db.query<TestResponseRow[]>(returnResponse()),
-        result = JSON.parse(rows[0].response);
-
     return success({ 
-      response: result
+      response: JSON.parse(resultCreate[1][0].response)
     });
   } catch (error) {
-    return fail(error instanceof Error ? error.message : 'Failed to Create Tests');
+    return fail(
+      error instanceof Error ? error.message : 'Failed to Create Tests'
+    );
   }
 };
 
@@ -45,6 +39,8 @@ export async function GET() {
 
     return success({ data: rows });
   } catch (err) {
-    return fail(err instanceof Error ? err.message : 'Failed to get tests');
+    return fail(
+      err instanceof Error ? err.message : 'Failed to get tests'
+    );
   }
-}
+};

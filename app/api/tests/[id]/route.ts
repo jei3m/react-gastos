@@ -1,16 +1,11 @@
 import { NextRequest } from 'next/server';
-import { RowDataPacket } from 'mysql2/promise';
 import { db } from '@/utils/db';
 import {
-    returnResponse,
     updateTest,
     deleteTest
 } from '@/sql/test/test.sql';
 import { success, fail } from '@/utils/helpers';
-
-interface responseRow extends RowDataPacket {
-  response: string;
-}
+import { responseRow } from '@/types/response';
 
 export async function PUT(
     req: NextRequest,
@@ -23,18 +18,18 @@ export async function PUT(
         } = await req.json(),
             id = params.id;
         
-        await db.query(updateTest(), {
-            actionType: 'update',
-            id,
-            name,
-            description
-        });
+        const [resultUpdate] = await db.query<responseRow[]>(
+            updateTest(), 
+            {
+                actionType: 'update',
+                id,
+                name,
+                description
+            }
+        );
 
-        const [rows] = await db.query<responseRow[]>(returnResponse()),
-            result = JSON.parse(rows[0].response);
-        
         return success({ 
-            response: result
+            response: JSON.parse(resultUpdate[1][0].response)
         });
     } catch (error) {
         return fail(error instanceof Error ? error.message : 'Failed to Update Test');
@@ -48,16 +43,16 @@ export async function DELETE(
     try {
         const id = params.id;
         
-        await db.query(deleteTest(), {
-            actionType: 'delete',
-            id
-        });
-
-        const [rows] = await db.query<responseRow[]>(returnResponse()),
-            result = JSON.parse(rows[0].response);
+        const [resultDelete] = await db.query<responseRow[]>(
+            deleteTest(), 
+            {
+                actionType: 'delete',
+                id
+            }
+        );
         
         return success({ 
-            response: result
+            response: JSON.parse(resultDelete[1][0].response)
         });
     } catch (error) {
         return fail(error instanceof Error ? error.message : 'Failed to Update Test');
