@@ -97,3 +97,7 @@
     @apply font-heading;
   }
 }
+
+.transition-all {
+  transition: all 0.1s ease-in-out;
+}
