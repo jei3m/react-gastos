@@ -326,7 +326,7 @@ export default function Transactions() {
                     </CardTitle>
                   </CardHeader>
                   <div className='w-full border-t border-gray-300' />
-                  <CardContent className='-mb-2'>
+                  <CardContent className='-mb-4'>
                     {transaction.details.map((detail, index) => (
                       <div key={index} className='space-y-3 flex flex-row items-center justify-between'>
                         <div className='flex flex-col text-sm'>
