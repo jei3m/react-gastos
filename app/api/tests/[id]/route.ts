@@ -5,7 +5,7 @@ import {
     deleteTest
 } from '@/sql/test/test.sql';
 import { success, fail } from '@/utils/helpers';
-import { responseRow } from '@/types/response';
+import { responseRow } from '@/types/response.types';
 
 export async function PUT(
     req: NextRequest,
