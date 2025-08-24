@@ -47,6 +47,7 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
+import { Dock } from '@/components/custom/dock';
 
 export default function Transactions() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -55,15 +56,7 @@ export default function Transactions() {
   const [userEmail, setUserEmail] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    const onScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
+  // Validate user session
   useEffect(() => {
     fetchSession().then(({ session }) => {
       if (!session) {
@@ -71,6 +64,16 @@ export default function Transactions() {
       }
       setUserEmail(session?.user.email ?? '');
     })
+  }, []);
+
+  // Set isScrolled
+  useEffect(() => {
+    const onScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   // Function to handle previous or next 
@@ -162,20 +165,22 @@ export default function Transactions() {
   };
 
   // Declaration of variables for filtering and display
-  const { dateStart, dateEnd, dateDisplay } = getDateRange();
+  const { dateStart, dateEnd, dateDisplay } = getDateRange();  
+
+  useEffect(() => {
+    console.log(`Date Start: ${dateStart}`);
+    console.log(`Date End: ${dateEnd}`);
+  },[activeTab])
 
   // Reset currentDate every tab change
   useEffect(() => {
     setCurrentDate(new Date())
   }, [activeTab])
 
-  console.log(`Date Start: ${dateStart}`);
-  console.log(`Date End: ${dateEnd}`);
-
   return (
     <>
       {/* Date Card Section */}
-      <main className='flex flex-col m-auto space-y-2'>
+      <main className='flex flex-col m-auto space-y-2 min-h-[calc(100%-100px)]'>
         {isScrolled ?         
           <section className='sticky top-0 z-10 transition-all'>
             <Card className="-mt-2 w-full border-0 rounded-none">
@@ -309,35 +314,41 @@ export default function Transactions() {
 
 
         {/* Transactions Section */}
-        <section className='flex flex-col space-y-2 px-3'>
-          {transactions.map((transaction, index) => (
-            <Card key={index} className='border-2'>
-              <CardHeader>
-                <CardTitle className='flex justify-between'>
-                  <span>{transaction.date}</span>
-                  <span className='text-red-500'>{transaction.total}</span>
-                </CardTitle>
-              </CardHeader>
-              <div className='w-full border-t border-gray-300' />
-              <CardContent className='-mb-2'>
-                {transaction.details.map((detail, index) => (
-                  <div key={index} className='space-y-3 flex flex-row items-center justify-between'>
-                    <div className='flex flex-col text-sm'>
-                      <span>
-                        {detail.category}
-                      </span>
-                      <span className='text-gray-600'>
-                        {detail.note}
-                      </span>
-                    </div>
-                    <span className='text-sm text-red-500'>
-                      {detail.amount}
-                    </span>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          ))}
+        <section className='flex flex-col space-y-2 px-3 mb-2'>
+          {transactions ? 
+            <>
+              {transactions.map((transaction, index) => (
+                <Card key={index} className='border-2'>
+                  <CardHeader>
+                    <CardTitle className='flex justify-between'>
+                      <span>{transaction.date}</span>
+                      <span className='text-red-500'>{transaction.total}</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <div className='w-full border-t border-gray-300' />
+                  <CardContent className='-mb-2'>
+                    {transaction.details.map((detail, index) => (
+                      <div key={index} className='space-y-3 flex flex-row items-center justify-between'>
+                        <div className='flex flex-col text-sm'>
+                          <span>
+                            {detail.category}
+                          </span>
+                          <span className='text-gray-600'>
+                            {detail.note}
+                          </span>
+                        </div>
+                        <span className='text-sm text-red-500'>
+                          {detail.amount}
+                        </span>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              ))}
+            </>
+            :
+            <></>
+          }
 
         </section>
       </main>
