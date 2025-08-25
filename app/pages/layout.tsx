@@ -10,7 +10,7 @@ export default function TransactionsLayout({
       {children}
       <Dock 
         variant='default'
-        className='w-full sticky bottom-0'
+        className='w-full fixed bottom-0'
         showLabels={false}
       />
     </>
