@@ -1,5 +1,6 @@
 'use client';
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { DockItem, DockProps } from '@/types/dock.types';
 import { 
@@ -9,37 +10,33 @@ import {
 import { cn } from '@/lib/utils';
 
 const defaultItems: DockItem[] = [
-  { label: 'transactions', icon: ArrowLeftRight, route:'/pages/transactions' },
-  { label: 'add transaction', icon: PlusSquare, route:'/pages/add-transaction' },
+  { 
+    label: 'transactions', 
+    icon: ArrowLeftRight, 
+    route:'/pages/transactions' 
+  },
+  { 
+    label: 'add transaction', 
+    icon: PlusSquare, 
+    route:'/pages/add-transaction' 
+  },
 ];
 export const Dock: React.FC<DockProps> = ({ 
   items, 
   className,
   variant = 'default',
   orientation = 'horizontal',
-  showLabels = true,
-  animated = false
+  showLabels = false
 }) => {
   const finalItems = useMemo(() => {
-     const isValid = items && Array.isArray(items) && items.length >= 2 && items.length <= 8;
-     if (!isValid) {
-        console.warn("Dock: 'items' prop is invalid or missing. Using default items.", items);
-        return defaultItems;
-     }
-     return items;
+    const isValid = items && Array.isArray(items) && items.length >= 2 && items.length <= 8;
+    if (!isValid) {
+      console.warn("Dock: 'items' prop is invalid or missing. Using default items.", items);
+      return defaultItems;
+    }
+    return items;
   }, [items]);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const textRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  useEffect(() => {
-      if (activeIndex >= finalItems.length) {
-          setActiveIndex(0);
-      }
-  }, [finalItems, activeIndex]);
-  const handleItemClick = (index: number, item: DockItem) => {
-    setActiveIndex(index);
-    item.onClick?.();
-  };
+
   const getVariantStyles = () => {
     switch (variant) {
       case 'compact':
@@ -59,6 +56,7 @@ export const Dock: React.FC<DockProps> = ({
     }
   };
   const styles = getVariantStyles();
+  const pathName = usePathname();
   return (
     <nav
       className={cn(
@@ -70,12 +68,11 @@ export const Dock: React.FC<DockProps> = ({
       role="navigation"
     >
       {finalItems.map((item, index) => {
-        const isActive = index === activeIndex;
+        const isActive = pathName === item.route;
         const IconComponent = item.icon;
         return (
           <Link href={item.route} key={`${item.label}-${index}`}>
             <button
-              ref={(el) => { itemRefs.current[index] = el; }}
               className={cn(
                 'relative flex flex-col items-center justify-center rounded-lg transition-all duration-200',
                 'hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
@@ -83,13 +80,11 @@ export const Dock: React.FC<DockProps> = ({
                 isActive && 'text-primary',
                 !isActive && 'text-muted-foreground hover:text-foreground'
               )}
-              onClick={() => handleItemClick(index, item)}
               aria-label={item.label}
               type="button"
             >
               <div className={cn(
                 'flex items-center justify-center transition-all duration-200',
-                animated && isActive && 'animate-bounce',
                 orientation === 'horizontal' && showLabels ? 'mb-1' : '',
                 orientation === 'vertical' && showLabels ? 'mb-1' : ''
               )}>
@@ -98,7 +93,6 @@ export const Dock: React.FC<DockProps> = ({
               
               {showLabels && (
                 <span
-                  ref={(el) => { textRefs.current[index] = el; }}
                   className={cn(
                     'font-medium transition-colors duration-200 capitalize',
                     styles.text,
