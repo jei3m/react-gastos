@@ -47,8 +47,8 @@ function Navbar() {
     setErrors([]);
 
     const form = new FormData(e.currentTarget);
-    const email = form.get("email") as string;
-    const password = form.get("password") as string;
+    // const email = form.get("email") as string;
+    // const password = form.get("password") as string;
 
     // const { error } = await authClient.signIn.email({
     //   email: email,

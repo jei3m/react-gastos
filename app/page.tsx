@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { fetchSession } from "@/utils/session";
 import { Loader2 } from "lucide-react";
 
-export default function page() {
+export default function Page() {
   const router = useRouter();
 
   useEffect(() => {

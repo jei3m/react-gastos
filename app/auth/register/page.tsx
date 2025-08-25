@@ -19,7 +19,7 @@ export default function Register() {
         router.push('/pages/transactions')
       } 
     });
-  },[]);
+  },[router]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

@@ -24,7 +24,6 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
-import { Dock } from '@/components/custom/dock';
 
 export default function Transactions() {
   const [isScrolled, setIsScrolled] = useState(false);
