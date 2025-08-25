@@ -11,7 +11,6 @@ export default function TransactionsLayout({
       <Dock 
         variant='default'
         className='w-full fixed bottom-0'
-        showLabels={false}
       />
     </>
   );
