@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useRef, useEffect, useMemo } from 'react';
+import Link from 'next/link';
 import { DockItem, DockProps } from '@/types/dock.types';
-import { useRouter } from 'next/navigation';
 import { 
   ArrowLeftRight, 
   PlusSquare 
@@ -29,9 +29,6 @@ export const Dock: React.FC<DockProps> = ({
      return items;
   }, [items]);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [underlineWidth, setUnderlineWidth] = useState(0);
-  const [underlineLeft, setUnderlineLeft] = useState(0);
-  
   const textRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
   useEffect(() => {
@@ -40,7 +37,6 @@ export const Dock: React.FC<DockProps> = ({
       }
   }, [finalItems, activeIndex]);
   const handleItemClick = (index: number, item: DockItem) => {
-    router.push(item.route);
     setActiveIndex(index);
     item.onClick?.();
   };
@@ -63,7 +59,6 @@ export const Dock: React.FC<DockProps> = ({
     }
   };
   const styles = getVariantStyles();
-  const router = useRouter();
   return (
     <nav
       className={cn(
@@ -78,42 +73,43 @@ export const Dock: React.FC<DockProps> = ({
         const isActive = index === activeIndex;
         const IconComponent = item.icon;
         return (
-          <button
-            key={`${item.label}-${index}`}
-            ref={(el) => { itemRefs.current[index] = el; }}
-            className={cn(
-              'relative flex flex-col items-center justify-center rounded-lg transition-all duration-200',
-              'hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-              styles.item,
-              isActive && 'text-primary',
-              !isActive && 'text-muted-foreground hover:text-foreground'
-            )}
-            onClick={() => handleItemClick(index, item)}
-            aria-label={item.label}
-            type="button"
-          >
-            <div className={cn(
-              'flex items-center justify-center transition-all duration-200',
-              animated && isActive && 'animate-bounce',
-              orientation === 'horizontal' && showLabels ? 'mb-1' : '',
-              orientation === 'vertical' && showLabels ? 'mb-1' : ''
-            )}>
-              <IconComponent className={cn(styles.icon, 'transition-colors duration-200')} />
-            </div>
-            
-            {showLabels && (
-              <span
-                ref={(el) => { textRefs.current[index] = el; }}
-                className={cn(
-                  'font-medium transition-colors duration-200 capitalize',
-                  styles.text,
-                  'whitespace-nowrap'
-                )}
-              >
-                {item.label}
-              </span>
-            )}
-          </button>
+          <Link href={item.route} key={`${item.label}-${index}`}>
+            <button
+              ref={(el) => { itemRefs.current[index] = el; }}
+              className={cn(
+                'relative flex flex-col items-center justify-center rounded-lg transition-all duration-200',
+                'hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                styles.item,
+                isActive && 'text-primary',
+                !isActive && 'text-muted-foreground hover:text-foreground'
+              )}
+              onClick={() => handleItemClick(index, item)}
+              aria-label={item.label}
+              type="button"
+            >
+              <div className={cn(
+                'flex items-center justify-center transition-all duration-200',
+                animated && isActive && 'animate-bounce',
+                orientation === 'horizontal' && showLabels ? 'mb-1' : '',
+                orientation === 'vertical' && showLabels ? 'mb-1' : ''
+              )}>
+                <IconComponent className={cn(styles.icon, 'transition-colors duration-200')} />
+              </div>
+              
+              {showLabels && (
+                <span
+                  ref={(el) => { textRefs.current[index] = el; }}
+                  className={cn(
+                    'font-medium transition-colors duration-200 capitalize',
+                    styles.text,
+                    'whitespace-nowrap'
+                  )}
+                >
+                  {item.label}
+                </span>
+              )}
+            </button>
+          </Link>
         );
       })}
     </nav>
