@@ -8,40 +8,32 @@ import { success, fail } from '@/utils/helpers';
 import { responseRow } from '@/types/response.types';
 
 export async function PUT(
-    req: NextRequest,
-    { params }: {params: { id: string } }
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
-    try {
-        const {
-            name, 
-            description
-        } = await req.json(),
-            id = params.id;
-        
-        const [resultUpdate] = await db.query<responseRow[]>(
-            updateTest(), 
-            {
-                actionType: 'update',
-                id,
-                name,
-                description
-            }
-        );
+  try {
+    const { name, description } = await req.json();
+    const { id } = await params; 
 
-        return success({ 
-            response: JSON.parse(resultUpdate[1][0].response)
-        });
-    } catch (error) {
-        return fail(error instanceof Error ? error.message : 'Failed to Update Test');
-    }
-};
+    const [resultUpdate] = await db.query<responseRow[]>(
+      updateTest(),
+      { actionType: 'update', id, name, description }
+    );
+
+    return success({
+      response: JSON.parse(resultUpdate[1][0].response)
+    });
+  } catch (error) {
+    return fail(error instanceof Error ? error.message : 'Failed to Update Test');
+  }
+}
 
 export async function DELETE(
     _req: NextRequest,
-    { params }: {params: { id: string } }
+    { params }: {params: Promise<{ id: string }> }
 ) {
     try {
-        const id = params.id;
+        const { id } = await params; 
         
         const [resultDelete] = await db.query<responseRow[]>(
             deleteTest(), 
