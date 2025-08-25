@@ -31,7 +31,7 @@ export function TypographyH3({
     ...props    
 }: HTMLAttributes<HTMLHeadingElement> & { children?: ReactNode }) {
   return (
-    <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight"
+    <h3 className="scroll-m-20 text-2xl font-extrabold tracking-tight"
         {...props}
     >
       {children}
