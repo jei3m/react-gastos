@@ -1,45 +1,22 @@
 "use client"
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/custom/navbar';
 import { tabItems, transactions } from '@/lib/data';
 import { fetchSession } from '@/utils/session';
 
 // ShadCN Components
-import { Button } from '@/components/ui/button';
 import {
   Card,
-  CardAction,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
 
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-import {
   Tabs,
-  TabsContent,
   TabsList,
   TabsTrigger
 } from "@/components/ui/tabs";
-
-import {
-  TypographyH1,
-  TypographyH2,
-  TypographyH3,
-  TypographyH4
-} from "@/components/custom/typography";
 
 // Icon Imports
 import {
@@ -180,7 +157,7 @@ export default function Transactions() {
   return (
     <>
       {/* Date Card Section */}
-      <main className='flex flex-col m-auto space-y-2 min-h-[calc(100%-100px)]'>
+      <main className='flex flex-col m-auto space-y-2 min-h-screen pb-12'>
         {isScrolled ?         
           <section className='sticky top-0 z-10 transition-all'>
             <Card className="-mt-2 w-full border-0 rounded-none">
