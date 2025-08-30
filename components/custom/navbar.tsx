@@ -73,7 +73,7 @@ function Navbar() {
                 {item.title}
               </SelectItem>
             ))}
-            <Link href={'/pages/create-account'}>
+            <Link href={'/pages/accounts/create'}>
               <Button 
                 onClick={() => setOpen(false)}  
                 className='mt-2 w-full bg-gray-300 text-black'
