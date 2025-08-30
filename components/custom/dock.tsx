@@ -18,7 +18,7 @@ const defaultItems: DockItem[] = [
   { 
     label: 'add transaction', 
     icon: PlusSquare, 
-    route:'/pages/add-transaction' 
+    route:'/pages/transactions/add' 
   },
 ];
 export const Dock: React.FC<DockProps> = ({ 
